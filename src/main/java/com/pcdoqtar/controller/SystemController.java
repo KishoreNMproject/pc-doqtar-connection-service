@@ -16,8 +16,8 @@ public class SystemController {
 
     }
     
-    @GetMapping("/Connection")
-    public Session connection() {
+    @GetMapping("/sessions")
+    public Session sessions() {
     	Configuration con = new Configuration();
     	SessionFactory sf = con.buildSessionFactory();
     	Session s = sf.openSession();
