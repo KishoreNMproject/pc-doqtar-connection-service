@@ -28,22 +28,23 @@ public class SystemController {
     }
 
     @GetMapping("/sessions")
-    public String sessions() {
+    public boolean sessions() {
 
         try (Session session = sessionFactory.openSession()) {
 
             session.createNativeQuery("SELECT 1", Integer.class).getSingleResult();
 
-            return "Hibernate database connection successful.";
+            return true;
 
         } catch (Exception e) {
 
-            return "Hibernate database connection failed.";
+            return false;
 
         }
     }
     @PersistenceContext
     private EntityManager entityManager;
+    
     @GetMapping("/getsession")
     @Transactional(readOnly = true)
     public Long getsession() {
