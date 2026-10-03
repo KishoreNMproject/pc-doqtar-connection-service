@@ -2,7 +2,6 @@ package com.pcdoqtar.controller;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,12 +15,25 @@ public class SystemController {
 
     }
     
+    private final SessionFactory sessionFactory;
+
+    public SystemController(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     @GetMapping("/sessions")
-    public Session sessions() {
-    	Configuration con = new Configuration();
-    	SessionFactory sf = con.buildSessionFactory();
-    	Session s = sf.openSession();
-    	return s;
-    	
+    public String sessions() {
+
+        try (Session session = sessionFactory.openSession()) {
+
+            session.createNativeQuery("SELECT 1", Integer.class).getSingleResult();
+
+            return "Hibernate database connection successful.";
+
+        } catch (Exception e) {
+
+            return "Hibernate database connection failed.";
+
+        }
     }
 }
