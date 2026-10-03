@@ -1,0 +1,52 @@
+name: Aiven Database Keep Alive
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+
+  workflow_dispatch:
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Aiven database
+        env:
+          AIVEN_TOKEN: ${{ secrets.AIVEN_TOKEN }}
+          AIVEN_PROJECT: ${{ secrets.AIVEN_PROJECT }}
+          AIVEN_SERVICE: ${{ secrets.AIVEN_SERVICE }}
+        run: |
+          echo "Checking Aiven database status..."
+
+          RESPONSE=$(curl -s \
+            -H "Authorization: aivenv1 $AIVEN_TOKEN" \
+            "https://api.aiven.io/v1/project/$AIVEN_PROJECT/service/$AIVEN_SERVICE")
+
+          STATE=$(echo "$RESPONSE" | jq -r '.service.state')
+
+          echo "Aiven state: $STATE"
+
+          if [ "$STATE" = "POWEROFF" ]; then
+
+            echo "Database is OFF."
+            echo "Requesting power ON..."
+
+            curl -s -X PUT \
+              -H "Authorization: aivenv1 $AIVEN_TOKEN" \
+              -H "Content-Type: application/json" \
+              -d '{"power_off":false}' \
+              "https://api.aiven.io/v1/project/$AIVEN_PROJECT/service/$AIVEN_SERVICE"
+
+            echo "Power-on request sent."
+
+          elif [ "$STATE" = "RUNNING" ]; then
+
+            echo "Database is already running."
+
+          else
+
+            echo "Database state: $STATE"
+            echo "No action required."
+
+          fi
