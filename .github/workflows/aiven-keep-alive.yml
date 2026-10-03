@@ -2,8 +2,8 @@ name: Aiven Database Keep Alive
 
 on:
   schedule:
+    # 1. Optimal Cron timing: runs continuously every 15 mins (shifted off-peak)
     - cron: "12,27,42,57 * * * *"
-
   workflow_dispatch:
 
 jobs:
@@ -18,35 +18,43 @@ jobs:
           AIVEN_SERVICE: ${{ secrets.AIVEN_SERVICE }}
         run: |
           echo "Checking Aiven database status..."
-
-          RESPONSE=$(curl -s \
+          
+          # Clean fetching using -sS to log errors natively
+          RESPONSE=$(curl -sS \
             -H "Authorization: aivenv1 $AIVEN_TOKEN" \
             "https://api.aiven.io/v1/project/$AIVEN_PROJECT/service/$AIVEN_SERVICE")
-
+          
           STATE=$(echo "$RESPONSE" | jq -r '.service.state')
-
           echo "Aiven state: $STATE"
-
+          
           if [ "$STATE" = "POWEROFF" ]; then
-
             echo "Database is OFF."
             echo "Requesting power ON..."
-
-            curl -s -X PUT \
+            
+            # 2. Corrected Payload and HTTP Verification Block
+            POWER_ON_RESPONSE=$(curl -sS -w "\n%{http_code}" -X PUT \
               -H "Authorization: aivenv1 $AIVEN_TOKEN" \
               -H "Content-Type: application/json" \
               -d '{"powered": true}' \
-              "https://api.aiven.io/v1/project/$AIVEN_PROJECT/service/$AIVEN_SERVICE"
-
-            echo "Power-on request sent."
-
+              "https://api.aiven.io/v1/project/$AIVEN_PROJECT/service/$AIVEN_SERVICE")
+            
+            # Isolating the Status Code vs the Body
+            HTTP_CODE=$(echo "$POWER_ON_RESPONSE" | tail -n 1)
+            RESPONSE_BODY=$(echo "$POWER_ON_RESPONSE" | sed '$d')
+            
+            echo "Aiven response code: $HTTP_CODE"
+            
+            if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ]; then
+              echo "Power-on request accepted by Aiven."
+            else
+              echo "CRITICAL: Power-on request failed!"
+              echo "Error detail: $RESPONSE_BODY"
+              exit 1
+            fi
+            
           elif [ "$STATE" = "RUNNING" ]; then
-
             echo "Database is already running."
-
           else
-
-            echo "Database state: $STATE"
+            echo "Database state is currently: $STATE"
             echo "No action required."
-
           fi
