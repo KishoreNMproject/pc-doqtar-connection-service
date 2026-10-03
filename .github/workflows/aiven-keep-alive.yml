@@ -2,7 +2,7 @@ name: Aiven Database Keep Alive
 
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "12,27,42,57 * * * *"
 
   workflow_dispatch:
 
@@ -35,7 +35,7 @@ jobs:
             curl -s -X PUT \
               -H "Authorization: aivenv1 $AIVEN_TOKEN" \
               -H "Content-Type: application/json" \
-              -d '{"power_off":false}' \
+              -d '{"powered": true}' \
               "https://api.aiven.io/v1/project/$AIVEN_PROJECT/service/$AIVEN_SERVICE"
 
             echo "Power-on request sent."
