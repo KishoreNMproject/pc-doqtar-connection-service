@@ -2,9 +2,15 @@ package com.pcdoqtar.controller;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+
+@Service
 @RestController
 public class SystemController {
 
@@ -35,5 +41,14 @@ public class SystemController {
             return "Hibernate database connection failed.";
 
         }
+    }
+    @PersistenceContext
+    private EntityManager entityManager;
+    @GetMapping("/getsession")
+    @Transactional(readOnly = true)
+    public Long getsession() {
+        // Execute a native query to pull the connection ID
+        return ((Number) entityManager.createNativeQuery("SELECT CONNECTION_ID()")
+                .getSingleResult()).longValue();
     }
 }
