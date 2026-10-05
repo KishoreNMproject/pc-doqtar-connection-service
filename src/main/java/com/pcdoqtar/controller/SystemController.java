@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@Service
+
 @RestController
 public class SystemController {
 
@@ -24,7 +24,6 @@ public class SystemController {
     public SystemController(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-
     @GetMapping("/sessions")
     public boolean sessions() {
 
@@ -43,7 +42,22 @@ public class SystemController {
    
     @GetMapping("/getsession")
     public String getsession() {
+    	
+    	String SessionId = UUID.randomUUID().toString();
 
-        return UUID.randomUUID().toString();
+        return SessionId;
+    }
+    
+
+    @GetMapping("/test")
+    public Integer test(){
+        try (Session session = sessionFactory.openSession()) {
+
+            return session.createNativeQuery("SELECT 1", Integer.class).getSingleResult();
+
+        } catch (Exception e) {
+
+            return 0;
+    	
     }
 }
