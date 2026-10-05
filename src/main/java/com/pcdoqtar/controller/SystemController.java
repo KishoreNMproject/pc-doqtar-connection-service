@@ -58,6 +58,7 @@ public class SystemController {
         } catch (Exception e) {
 
             return 0;
+        }
     	
     }
 }
