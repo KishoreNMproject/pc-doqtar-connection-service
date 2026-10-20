@@ -72,4 +72,8 @@ public class SystemController {
                 "This is a test error response."
         );
     }
+    @GetMapping("/error-trigger-test")
+    public String errorTriggerTest() {
+        throw new RuntimeException("Internal test exception");
+    }
 }
