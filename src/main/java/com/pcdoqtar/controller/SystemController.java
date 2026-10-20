@@ -3,9 +3,12 @@ package com.pcdoqtar.controller;
 import java.util.UUID;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.stereotype.Service;
+//import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.pcdoqtar.error.ErrorResponse;
+import com.pcdoqtar.error.ErrorType;
 
 
 
@@ -60,5 +63,13 @@ public class SystemController {
             return 0;
         }
     	
+    }
+    @GetMapping("/error-test")
+    public ErrorResponse errorTest() {
+
+        return new ErrorResponse(
+                ErrorType.SERVER_ERROR,
+                "This is a test error response."
+        );
     }
 }
