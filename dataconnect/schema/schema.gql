@@ -1,0 +1,35 @@
+type User @table {
+  email: String!
+  username: String!
+  createdAt: Timestamp
+}
+
+type Device @table {
+  user: User!
+  deviceName: String!
+  operatingSystem: String!
+  lastSeen: Timestamp!
+}
+
+type HealthSnapshot @table {
+  device: Device!
+  cpuUsage: Float!
+  ramUsage: Float!
+  diskUsage: Float!
+  timestamp: Timestamp!
+  gpuTemp: Float
+  cpuTemp: Float
+}
+
+type AlertConfig @table {
+  device: Device!
+  metricType: String!
+  thresholdValue: Float!
+  isActive: Boolean
+}
+
+type AlertLog @table {
+  alertConfig: AlertConfig!
+  detectedValue: Float!
+  timestamp: Timestamp!
+}
