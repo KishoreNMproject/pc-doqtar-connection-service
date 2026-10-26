@@ -1,8 +1,10 @@
 package com.pcdoqtar.application.entities;
 
 import jakarta.persistence.*;
-import java.util.List;
+import lombok.Data;
 
+import java.util.List;
+@Data
 @Entity
 @Table(name = "diagnostic_snapshots")
 public class DiagnosticSnapshot {
