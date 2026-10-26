@@ -47,6 +47,11 @@ public class SystemController {
         }
     }
 
+    @GetMapping("/getsession")
+    public String getSession() {
+        return java.util.UUID.randomUUID().toString();
+    }
+
     @GetMapping("/test")
     public Integer test(){
         try (Session session = sessionFactory.openSession()) {
