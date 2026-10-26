@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pcdoqtar.application.security.FirebaseAuthenticationFilter;
 
-/**
- * Returns identity claims from a Firebase ID token already verified by the
- * FirebaseAuthenticationFilter. It does not accept a UID supplied by clients.
- */
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {

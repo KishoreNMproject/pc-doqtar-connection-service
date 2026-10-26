@@ -1,10 +1,13 @@
 package com.pcdoqtar.application.controller;
 
-import java.util.UUID;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pcdoqtar.application.error.ErrorResponse;
@@ -27,8 +30,9 @@ public class SystemController {
     public SystemController(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
     @GetMapping("/sessions")
-    public boolean sessions() {
+    public boolean session() {
 
         try (Session session = sessionFactory.openSession()) {
 
@@ -42,15 +46,6 @@ public class SystemController {
 
         }
     }
-   
-    @GetMapping("/getsession")
-    public String getsession() {
-    	
-    	String SessionId = UUID.randomUUID().toString();
-
-        return SessionId;
-    }
-    
 
     @GetMapping("/test")
     public Integer test(){
@@ -71,9 +66,5 @@ public class SystemController {
                 ErrorType.SERVER_ERROR,
                 "This is a test error response."
         );
-    }
-    @GetMapping("/error-trigger-test")
-    public String errorTriggerTest() {
-        throw new RuntimeException("Internal test exception");
     }
 }

@@ -32,7 +32,13 @@
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
         </dependency>
-
+		<!-- Source: https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.18.46</version>
+    <scope>provided</scope>
+</dependency>
         <!-- Server-side Firebase ID-token verification. Never bundle service-account keys in the repo. -->
         <dependency>
             <groupId>com.google.firebase</groupId>
