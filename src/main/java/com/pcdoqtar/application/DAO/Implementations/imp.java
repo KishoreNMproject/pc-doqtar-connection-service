@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.annotations.processing.Find;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.pcdoqtar.application.controller.SystemController;
@@ -24,6 +25,8 @@ public class imp implements DAO{
 		File Diagnostics = null;
 		try(Session session = sessionFactory.openSession()){
 			org.hibernate.Transaction transaction = session.beginTransaction();
+			
+			
 			
 			transaction.commit();
 			
