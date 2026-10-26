@@ -1,4 +1,4 @@
-package com.pcdoqtar.security;
+package com.pcdoqtar.application.security;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

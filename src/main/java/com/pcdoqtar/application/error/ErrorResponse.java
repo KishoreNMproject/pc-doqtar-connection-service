@@ -1,4 +1,4 @@
-package com.pcdoqtar.error;
+package com.pcdoqtar.application.error;
 
 public class ErrorResponse {
 

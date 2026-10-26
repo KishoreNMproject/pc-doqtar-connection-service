@@ -1,10 +1,11 @@
-package com.pcdoqtar.controller;
+package com.pcdoqtar.application.controller;
 
-import com.pcdoqtar.security.FirebaseAuthenticationFilter;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.pcdoqtar.application.security.FirebaseAuthenticationFilter;
 
 /**
  * Returns identity claims from a Firebase ID token already verified by the

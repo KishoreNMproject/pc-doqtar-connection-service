@@ -1,4 +1,4 @@
-package com.pcdoqtar.controller;
+package com.pcdoqtar.application.controller;
 
 import java.util.UUID;
 import org.hibernate.Session;
@@ -7,8 +7,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pcdoqtar.error.ErrorResponse;
-import com.pcdoqtar.error.ErrorType;
+import com.pcdoqtar.application.error.ErrorResponse;
+import com.pcdoqtar.application.error.ErrorType;
 
 
 

@@ -1,4 +1,4 @@
-package com.pcdoqtar.config;
+package com.pcdoqtar.application.config;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

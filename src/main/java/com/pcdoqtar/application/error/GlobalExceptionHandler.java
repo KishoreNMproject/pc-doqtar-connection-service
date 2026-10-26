@@ -1,5 +1,5 @@
 
-package com.pcdoqtar.error;
+package com.pcdoqtar.application.error;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
