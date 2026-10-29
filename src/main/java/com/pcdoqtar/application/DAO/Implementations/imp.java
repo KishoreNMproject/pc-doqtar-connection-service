@@ -1,17 +1,11 @@
 package com.pcdoqtar.application.DAO.Implementations;
 
-import com.pcdoqtar.application.DAO.DAO;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.annotations.processing.Find;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.pcdoqtar.application.controller.SystemController;
-
-import jakarta.transaction.Transaction;
+import com.pcdoqtar.application.DAO.DAO;
 
 public class imp implements DAO{
 	
